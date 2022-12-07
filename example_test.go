@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"github.com/cristalhq/dbg"
@@ -39,13 +40,13 @@ func ExampleWatch() {
 func ExamplePrintOnce() {
 	defer pleaseIgnoreThisFuncCall()
 
-	count := 0
+	var count int32
 	for i := 0; i < 10; i++ {
 		dbg.PrintOnce("debuging")
 
 		go func() {
 			if i == 10 {
-				count++
+				atomic.AddInt32(&count, 1)
 			}
 		}()
 	}
