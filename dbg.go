@@ -7,6 +7,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -42,6 +43,26 @@ func Watch(labels ...any) func() {
 		// TODO: add histogram
 		fmt.Fprintln(output, caller, "took:", took.String())
 	}
+}
+
+var hitMap sync.Map
+
+// Hit increases counter for the given line.
+// See PrintHits to print collected hits.
+func Hit(labels ...any) {
+	// TODO: labels
+	loc := Location(2)
+
+	counter, _ := hitMap.LoadOrStore(loc, new(int32))
+	atomic.AddInt32(counter.(*int32), 1)
+}
+
+// PrintHits collected at the moment of call.
+func PrintHits() {
+	hitMap.Range(func(key, value any) bool {
+		fmt.Fprintln(output, key, *value.(*int32))
+		return true
+	})
 }
 
 var printOnceMap sync.Map
@@ -80,5 +101,5 @@ func Location(skip int) string {
 	if !ok {
 		return "<UNKNOWN:0>"
 	}
-	return fmt.Sprintf("%s-%d", file, line)
+	return fmt.Sprintf("%s:%d", file, line)
 }

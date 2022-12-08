@@ -27,12 +27,28 @@ func ExampleWatch() {
 	}()
 
 	output := testBuf.String()
-	if !strings.Contains(output, "dbg_test.ExampleWatch") {
-		panic("do not have func")
+	mustContain(output, "dbg_test.ExampleWatch")
+	mustContain(output, "dbg_test.ExampleWatch.func1")
+
+	// Output:
+}
+
+func ExampleHit() {
+	defer pleaseIgnoreThisFuncCall()
+	defer dbg.PrintHits()
+
+	for i := 0; i < 10; i++ {
+		dbg.Hit()
+		if i%2 == 0 {
+			dbg.Hit()
+		}
 	}
-	if !strings.Contains(output, "dbg_test.ExampleWatch.func1") {
-		panic("do not have anon-func")
-	}
+
+	dbg.PrintHits()
+
+	output := testBuf.String()
+	mustContain(output, "example_test.go:40 10")
+	mustContain(output, "example_test.go:42 5")
 
 	// Output:
 }
@@ -40,14 +56,11 @@ func ExampleWatch() {
 func ExamplePrintOnce() {
 	defer pleaseIgnoreThisFuncCall()
 
-	var count int32
 	for i := 0; i < 10; i++ {
 		dbg.PrintOnce("debuging")
 
 		go func() {
-			if i == 10 {
-				atomic.AddInt32(&count, 1)
-			}
+			_ = "noop"
 		}()
 	}
 
@@ -55,6 +68,12 @@ func ExamplePrintOnce() {
 
 	// Output:
 	// debuging
+}
+
+func mustContain(s, substr string) {
+	if !strings.Contains(s, substr) {
+		panic("does not contain")
+	}
 }
 
 func pleaseIgnoreThisFuncCall() {
