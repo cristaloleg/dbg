@@ -51,20 +51,17 @@ func Watch(labels ...any) func() {
 
 var hitMap sync.Map
 
-// Hit increases counter for the given line.
+// Hit increment counter for the given line.
 // See PrintHits to print collected hits.
-func Hit(labels ...any) {
-	// TODO: labels
-	loc := Location(2)
-
-	counter, _ := hitMap.LoadOrStore(loc, new(int32))
-	atomic.AddInt32(counter.(*int32), 1)
+func Hit() {
+	counter := get(&hitMap, Location(2), new(int64))
+	atomic.AddInt64(counter, 1)
 }
 
 // PrintHits collected at the moment of call.
 func PrintHits() {
 	hitMap.Range(func(key, value any) bool {
-		fmt.Fprintln(output, key, *value.(*int32))
+		fmt.Fprintln(output, key, atomic.LoadInt64(value.(*int64)))
 		return true
 	})
 }
