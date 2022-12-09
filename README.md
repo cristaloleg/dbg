@@ -11,8 +11,8 @@ Debug helpers for Go.
 ## Features
 
 * Simple.
-* Fast.
-* Helps a lot.
+* Useful.
+* Really helps.
 
 See [these docs][pkg-url] or [GUIDE.md](GUIDE.md) for more details.
 
