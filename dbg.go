@@ -82,6 +82,30 @@ func PrintOnce(s string) {
 	})
 }
 
+var rarelyMap sync.Map
+
+// Rarely run fn with a given probability.
+func Rarely(prob float64, fn func(count int64)) {
+	counter := get(&rarelyMap, Location(2), new(int64))
+	done := atomic.AddInt64(counter, 1)
+
+	if x := rnd.Float64(); x < prob {
+		fn(done)
+	}
+}
+
+var everyMap sync.Map
+
+// Every x calls run fn.
+func Every(x int64, fn func(count int64)) {
+	counter := get(&everyMap, Location(2), new(int64))
+	done := atomic.AddInt64(counter, 1)
+
+	if done > 0 && done%x == 0 {
+		fn(done)
+	}
+}
+
 // Caller of the function but with a skipped callers in-between.
 // If caller cannot be detected - Location(skip) is returned.
 func Caller(skip int) string {

@@ -90,6 +90,30 @@ func ExampleOnceButTwice() {
 	// I'm printed twice!
 }
 
+func ExampleRarely() {
+	var counter int
+	for i := 0; i < 1000; i++ {
+		dbg.Rarely(0.1, func(count int64) { counter++ })
+	}
+
+	fmt.Println(counter < 150)
+
+	// Output:
+	// true
+}
+
+func ExampleEvery() {
+	var counter int
+	for i := 0; i < 1000; i++ {
+		dbg.Every(10, func(count int64) { counter++ })
+	}
+
+	fmt.Println(counter)
+
+	// Output:
+	// 100
+}
+
 func mustContain(s, substr string) {
 	if !strings.Contains(s, substr) {
 		panic("does not contain")
