@@ -107,3 +107,8 @@ func Location(skip int) string {
 	}
 	return fmt.Sprintf("%s:%d", file, line)
 }
+
+func get[K any, V any](m *sync.Map, key K, def V) V {
+	val, _ := m.LoadOrStore(key, def)
+	return val.(V)
+}
