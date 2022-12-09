@@ -66,16 +66,20 @@ func PrintHits() {
 	})
 }
 
-var printOnceMap sync.Map
+var onceMap sync.Map
+
+// Once will run the given fn once on the line of call.
+func Once(fn func()) {
+	once := get(&onceMap, Location(2), new(sync.Once))
+	once.Do(fn)
+}
 
 // PrintOnce the given string.
 func PrintOnce(s string) {
-	loc := Location(2)
-
-	_, ok := printOnceMap.LoadOrStore(loc, 1)
-	if !ok {
+	once := get(&onceMap, Location(2), new(sync.Once))
+	once.Do(func() {
 		fmt.Fprintln(output, s)
-	}
+	})
 }
 
 // Caller of the function but with a skipped callers in-between.
