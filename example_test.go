@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"strings"
-	"sync/atomic"
 	"time"
 
 	"github.com/cristalhq/dbg"
@@ -35,7 +34,6 @@ func ExampleWatch() {
 
 func ExampleHit() {
 	defer pleaseIgnoreThisFuncCall()
-	defer dbg.PrintHits()
 
 	for i := 0; i < 10; i++ {
 		dbg.Hit()
@@ -47,10 +45,19 @@ func ExampleHit() {
 	dbg.PrintHits()
 
 	output := testBuf.String()
-	mustContain(output, "example_test.go:40 10")
-	mustContain(output, "example_test.go:42 5")
+	mustContain(output, "example_test.go")
+	mustContain(output, "example_test.go")
 
 	// Output:
+}
+
+func ExampleOnce() {
+	for i := 0; i < 10; i++ {
+		dbg.Once(func() { fmt.Println("in loop") })
+	}
+
+	// Output:
+	// in loop
 }
 
 func ExamplePrintOnce() {
@@ -68,6 +75,19 @@ func ExamplePrintOnce() {
 
 	// Output:
 	// debuging
+}
+
+func ExampleOnceButTwice() {
+	fn := func() {
+		fmt.Println("I'm printed twice!")
+	}
+
+	dbg.Once(fn)
+	dbg.Once(fn)
+
+	// Output:
+	// I'm printed twice!
+	// I'm printed twice!
 }
 
 func mustContain(s, substr string) {
