@@ -3,6 +3,7 @@ package dbg
 import (
 	"fmt"
 	"io"
+	"math/rand"
 	"os"
 	"runtime"
 	"strings"
@@ -14,6 +15,9 @@ import (
 var (
 	output     io.Writer = os.Stdout
 	outputOnce sync.Once
+
+	// NOTE: not needed after Go 1.20
+	rnd = rand.New(rand.NewSource(time.Now().Unix()))
 )
 
 // SetOutput for the dbg package. Can be set once.
