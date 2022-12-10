@@ -114,6 +114,33 @@ func ExampleEvery() {
 	// 100
 }
 
+func ExampleCallers() {
+	var callers []string
+	f1 := func() {
+		callers = dbg.Callers(20)
+	}
+	f2 := func() { f1() }
+	f3 := func() { f2() }
+	f4 := func() { f3() }
+
+	f4()
+
+	fmt.Println(strings.Join(callers, "\n"))
+
+	// Output:
+	// github.com/cristalhq/dbg_test.ExampleCallers.func1
+	// github.com/cristalhq/dbg_test.ExampleCallers.func2
+	// github.com/cristalhq/dbg_test.ExampleCallers.func3
+	// github.com/cristalhq/dbg_test.ExampleCallers.func4
+	// github.com/cristalhq/dbg_test.ExampleCallers
+	// testing.runExample
+	// testing.runExamples
+	// testing.(*M).Run
+	// main.main
+	// runtime.main
+	// runtime.goexit
+}
+
 func mustContain(s, substr string) {
 	if !strings.Contains(s, substr) {
 		panic("does not contain")

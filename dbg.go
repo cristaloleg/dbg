@@ -123,6 +123,23 @@ func Caller(skip int) string {
 	return name
 }
 
+// Callers returns stack of callers no deeper than a given value.
+func Callers(depth int) []string {
+	fpcs := make([]uintptr, depth)
+	if runtime.Callers(2, fpcs) == 0 {
+		return nil
+	}
+
+	callers := make([]string, 0, len(fpcs))
+	for _, p := range fpcs {
+		caller := runtime.FuncForPC(p - 1)
+		if caller != nil {
+			callers = append(callers, caller.Name())
+		}
+	}
+	return callers
+}
+
 // Location of the function caller but with a skipped callers in-between.
 func Location(skip int) string {
 	_, file, line, ok := runtime.Caller(skip)
