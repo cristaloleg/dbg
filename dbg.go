@@ -112,7 +112,7 @@ func Caller(skip int) string {
 	pc, _, _, ok := runtime.Caller(skip)
 	details := runtime.FuncForPC(pc)
 	if !ok || details == nil {
-		return Location(skip + 1)
+		return "<UNKNOWN:0>"
 	}
 
 	name := details.Name()
@@ -121,7 +121,6 @@ func Caller(skip int) string {
 		name = name[idx+1:]
 	}
 	return name
-
 }
 
 // Location of the function caller but with a skipped callers in-between.
