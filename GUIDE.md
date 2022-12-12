@@ -100,3 +100,23 @@ func StringLen(input string) int {
 	return len(input)
 }
 ```
+
+## Sink value
+
+During debug you might find yourself commenting/uncommenting a lot of code and each comment can impact variable usage.
+
+Because Go doesn't forgive unused variables you are forced to write `_ = x` to make program compile.
+
+To make this simpler use `dbg.Sink`:
+
+```go
+func Debug1() {
+	x := 123
+	y := 456
+
+	// TODO: why it panics?
+	// res := 1.0 / float64(y - 2*x)
+
+	dbg.Sink(x, y)
+}
+```

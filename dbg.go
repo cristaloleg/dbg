@@ -106,6 +106,10 @@ func Every(x int64, fn func(count int64)) {
 	}
 }
 
+// Sink any value like it's used.
+// Treat it as `_ = x` or `_, _, ... = x, y, ...`.
+func Sink(values ...any) {}
+
 // Caller of the function but with a skipped callers in-between.
 // If caller cannot be detected - Location(skip) is returned.
 func Caller(skip int) string {
