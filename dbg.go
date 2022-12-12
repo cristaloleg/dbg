@@ -144,13 +144,16 @@ func Callers(depth int) []string {
 	return callers
 }
 
-// Location of the function caller but with a skipped callers in-between.
-func Location(skip int) string {
-	_, file, line, ok := runtime.Caller(skip)
-	if !ok {
-		return "<UNKNOWN:0>"
+// DumpGoroutines returns stacktrace for the current goroutine or all of them.
+func DumpGoroutines(all bool) string {
+	buf := make([]byte, 4096)
+	for {
+		n := runtime.Stack(buf, all)
+		if n < len(buf) {
+			return string(buf[:n])
+		}
+		buf = make([]byte, 2*len(buf))
 	}
-	return fmt.Sprintf("%s:%d", file, line)
 }
 
 func get[K any, V any](m *sync.Map, key K, def V) V {
