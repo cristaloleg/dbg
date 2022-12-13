@@ -37,15 +37,16 @@ func SetOutput(w io.Writer) {
 //	watch()
 //
 // to call in a specific place.
-func Watch(labels ...any) func() {
+func Watch(labels ...any) func() time.Duration {
 	// TODO: labels
 	caller := Caller(2)
 	start := time.Now()
 
-	return func() {
+	return func() time.Duration {
 		took := time.Since(start)
 		// TODO: add histogram
 		fmt.Fprintln(output, caller, "took:", took.String())
+		return took
 	}
 }
 
