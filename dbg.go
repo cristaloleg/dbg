@@ -16,7 +16,7 @@ var (
 	output     io.Writer = os.Stdout
 	outputOnce sync.Once
 
-	// NOTE: not needed after Go 1.20
+	// NOTE: not needed after Go 1.20.
 	rnd = rand.New(rand.NewSource(time.Now().Unix()))
 )
 

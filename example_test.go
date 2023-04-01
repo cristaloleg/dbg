@@ -87,7 +87,7 @@ func ExamplePrintOnce() {
 	// debuging
 }
 
-func ExampleOnceButTwice() {
+func Example_onceButTwice() {
 	fn := func() {
 		fmt.Println("I'm printed twice!")
 	}
