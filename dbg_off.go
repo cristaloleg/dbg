@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+func True(cond bool, a ...any)                  {}
+func Truef(cond bool, format string, a ...any)  {}
+func False(cond bool, a ...any)                 {}
+func Falsef(cond bool, format string, a ...any) {}
+
 func Watch(labels ...any) func() time.Duration {
 	return func() time.Duration { return 0 }
 }
