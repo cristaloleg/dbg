@@ -15,6 +15,16 @@ func init() {
 	dbg.SetOutput(&testBuf)
 }
 
+func ExampleSink() {
+	x, y := 123, 456
+	// TODO: commented for now
+	// x = y / 0
+
+	dbg.Sink(x, y)
+
+	// Output:
+}
+
 func ExampleWatch() {
 	defer pleaseIgnoreThisFuncCall()
 
@@ -77,7 +87,7 @@ func ExamplePrintOnce() {
 	// debuging
 }
 
-func ExampleOnceButTwice() {
+func Example_onceButTwice() {
 	fn := func() {
 		fmt.Println("I'm printed twice!")
 	}
