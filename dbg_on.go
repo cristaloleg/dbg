@@ -80,6 +80,18 @@ func PrintOnce(s string) {
 	})
 }
 
+var firstMap sync.Map
+
+// First x calls invoke fn.
+func First(x int64, fn func(count int64)) {
+	counter := get(&firstMap, Location(2), new(int64))
+	done := atomic.AddInt64(counter, 1)
+
+	if done <= x {
+		fn(done)
+	}
+}
+
 var rarelyMap sync.Map
 
 // Rarely run fn with a given probability.
