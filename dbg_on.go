@@ -10,6 +10,16 @@ import (
 	"time"
 )
 
+// Do a func. Works only in debug mode.
+func Do(fn func()) { fn() }
+
+// When cond is true invoke fn.
+func When(cond bool, fn func()) {
+	if cond {
+		fn()
+	}
+}
+
 // Want panics if cond is false.
 func Want(cond bool, format string, a ...any) {
 	if cond {
