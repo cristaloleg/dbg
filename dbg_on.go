@@ -10,13 +10,8 @@ import (
 	"time"
 )
 
-// True panics if cond is false.
-func True(cond bool, a ...any) {
-	Truef(cond, fmt.Sprint(a...))
-}
-
-// Truef panics if cond is false.
-func Truef(cond bool, format string, a ...any) {
+// Want panics if cond is false.
+func Want(cond bool, format string, a ...any) {
 	if cond {
 		return
 	}
@@ -25,16 +20,6 @@ func Truef(cond bool, format string, a ...any) {
 		format = fmt.Sprintf(format, a...)
 	}
 	panic(format)
-}
-
-// False panics if cond is true.
-func False(cond bool, a ...any) {
-	Truef(!cond, fmt.Sprint(a...))
-}
-
-// Falsef panics if cond is true.
-func Falsef(cond bool, format string, a ...any) {
-	Truef(!cond, format, a...)
 }
 
 // Watch the function timing.
