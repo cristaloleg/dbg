@@ -10,6 +10,18 @@ import (
 	"time"
 )
 
+// Want panics if cond is false.
+func Want(cond bool, format string, a ...any) {
+	if cond {
+		return
+	}
+
+	if len(a) > 0 {
+		format = fmt.Sprintf(format, a...)
+	}
+	panic(format)
+}
+
 // Watch the function timing.
 // The most popular usage is:
 //

@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+func Want(cond bool, format string, a ...any) {}
 func Watch(labels ...any) func() time.Duration {
 	return func() time.Duration { return 0 }
 }
