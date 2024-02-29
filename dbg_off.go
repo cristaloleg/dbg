@@ -14,6 +14,7 @@ func Hit()                                          {}
 func PrintHits()                                    {}
 func Once(fn func())                                {}
 func PrintOnce(s string)                            {}
+func First(x int64, fn func(count int64))           {}
 func Rarely(prob float64, fn func(count int64))     {}
 func Every(x int64, fn func(count int64))           {}
 func Interval(x time.Duration, fn func(last int64)) {}
