@@ -13,10 +13,10 @@ jobs:
   build:
     uses: cristalhq/.github/.github/workflows/build.yml@v0.7.0
 
-  build:
+  build-nodebug:
+    uses: cristalhq/.github/.github/workflows/build.yml@cristaloleg-patch-1
     with:
       buildTags: nodebug
-    uses: cristalhq/.github/.github/workflows/build.yml@cristaloleg-patch-1
 
   vuln:
     uses: cristalhq/.github/.github/workflows/vuln.yml@v0.7.0
