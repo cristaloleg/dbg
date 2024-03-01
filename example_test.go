@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cristalhq/dbg"
+	"github.com/cristaloleg/dbg"
 )
 
 var testBuf bytes.Buffer
@@ -140,11 +140,11 @@ func ExampleCallers() {
 	fmt.Println(strings.Join(callers, "\n"))
 
 	// Output:
-	// github.com/cristalhq/dbg_test.ExampleCallers.func1
-	// github.com/cristalhq/dbg_test.ExampleCallers.func2
-	// github.com/cristalhq/dbg_test.ExampleCallers.func3
-	// github.com/cristalhq/dbg_test.ExampleCallers.func4
-	// github.com/cristalhq/dbg_test.ExampleCallers
+	// github.com/cristaloleg/dbg_test.ExampleCallers.func1
+	// github.com/cristaloleg/dbg_test.ExampleCallers.func2
+	// github.com/cristaloleg/dbg_test.ExampleCallers.func3
+	// github.com/cristaloleg/dbg_test.ExampleCallers.func4
+	// github.com/cristaloleg/dbg_test.ExampleCallers
 	// testing.runExample
 	// testing.runExamples
 	// testing.(*M).Run

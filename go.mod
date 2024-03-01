@@ -1,3 +1,3 @@
-module github.com/cristalhq/dbg
+module github.com/cristaloleg/dbg
 
 go 1.20
