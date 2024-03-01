@@ -11,13 +11,13 @@ on:
 # See https://github.com/cristalhq/.github/.github/workflows
 jobs:
   build:
-    uses: cristalhq/.github/.github/workflows/build.yml@711347e002043f2d3ed9293d83578b76d9bce0b3
+    uses: cristalhq/.github/.github/workflows/build.yml@v0.8.1
 
   build-nodebug:
-    uses: cristalhq/.github/.github/workflows/build.yml@711347e002043f2d3ed9293d83578b76d9bce0b3
+    uses: cristalhq/.github/.github/workflows/build.yml@v0.8.1
     with:
       buildTags: nodebug
       groupSuffix: nodebug
 
   vuln:
-    uses: cristalhq/.github/.github/workflows/vuln.yml@v0.8.0
+    uses: cristalhq/.github/.github/workflows/vuln.yml@v0.8.1
