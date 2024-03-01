@@ -21,7 +21,7 @@ See [these docs][pkg-url] or [GUIDE.md](GUIDE.md) for more details.
 Go version 1.19+
 
 ```
-go get github.com/cristalhq/dbg
+go get github.com/cristaloleg/dbg
 ```
 
 ## Example
@@ -36,13 +36,13 @@ See examples: [example_test.go](example_test.go).
 
 [MIT License](LICENSE).
 
-[build-img]: https://github.com/cristalhq/dbg/workflows/build/badge.svg
-[build-url]: https://github.com/cristalhq/dbg/actions
-[pkg-img]: https://pkg.go.dev/badge/cristalhq/dbg
-[pkg-url]: https://pkg.go.dev/github.com/cristalhq/dbg
-[reportcard-img]: https://goreportcard.com/badge/cristalhq/dbg
-[reportcard-url]: https://goreportcard.com/report/cristalhq/dbg
-[coverage-img]: https://codecov.io/gh/cristalhq/dbg/branch/main/graph/badge.svg
-[coverage-url]: https://codecov.io/gh/cristalhq/dbg
-[version-img]: https://img.shields.io/github/v/release/cristalhq/dbg
-[version-url]: https://github.com/cristalhq/dbg/releases
+[build-img]: https://github.com/cristaloleg/dbg/workflows/build/badge.svg
+[build-url]: https://github.com/cristaloleg/dbg/actions
+[pkg-img]: https://pkg.go.dev/badge/cristaloleg/dbg
+[pkg-url]: https://pkg.go.dev/github.com/cristaloleg/dbg
+[reportcard-img]: https://goreportcard.com/badge/cristaloleg/dbg
+[reportcard-url]: https://goreportcard.com/report/cristaloleg/dbg
+[coverage-img]: https://codecov.io/gh/cristaloleg/dbg/branch/main/graph/badge.svg
+[coverage-url]: https://codecov.io/gh/cristaloleg/dbg
+[version-img]: https://img.shields.io/github/v/release/cristaloleg/dbg
+[version-url]: https://github.com/cristaloleg/dbg/releases
