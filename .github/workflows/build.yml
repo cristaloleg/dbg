@@ -10,8 +10,8 @@ on:
 
 # See https://github.com/cristalhq/.github/.github/workflows
 jobs:
-  build:
-    uses: cristalhq/.github/.github/workflows/build.yml@v0.8.0
+  # build:
+    # uses: cristalhq/.github/.github/workflows/build.yml@v0.8.0
 
   build-nodebug:
     uses: cristalhq/.github/.github/workflows/build.yml@v0.8.0
