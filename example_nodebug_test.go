@@ -1,4 +1,4 @@
-//go:build !nodebug
+//go:build nodebug
 
 package dbg_test
 
@@ -28,8 +28,6 @@ func ExampleSink() {
 }
 
 func ExampleWatch() {
-	defer pleaseIgnoreThisFuncCall()
-
 	defer dbg.Watch()()
 	func() {
 		defer dbg.Watch()()
@@ -37,16 +35,12 @@ func ExampleWatch() {
 		time.Sleep(time.Second)
 	}()
 
-	output := testBuf.String()
-	mustContain(output, "dbg_test.ExampleWatch")
-	mustContain(output, "dbg_test.ExampleWatch.func1")
+	fmt.Println(testBuf.String())
 
 	// Output:
 }
 
 func ExampleHit() {
-	defer pleaseIgnoreThisFuncCall()
-
 	for i := 0; i < 10; i++ {
 		dbg.Hit()
 		if i%2 == 0 {
@@ -56,9 +50,7 @@ func ExampleHit() {
 
 	dbg.PrintHits()
 
-	output := testBuf.String()
-	mustContain(output, "example_test.go")
-	mustContain(output, "example_test.go")
+	fmt.Println(testBuf.String())
 
 	// Output:
 }
@@ -69,12 +61,9 @@ func ExampleOnce() {
 	}
 
 	// Output:
-	// in loop
 }
 
 func ExamplePrintOnce() {
-	defer pleaseIgnoreThisFuncCall()
-
 	for i := 0; i < 10; i++ {
 		dbg.PrintOnce("debuging")
 
@@ -86,7 +75,6 @@ func ExamplePrintOnce() {
 	fmt.Println(testBuf.String())
 
 	// Output:
-	// debuging
 }
 
 func Example_onceButTwice() {
@@ -98,8 +86,6 @@ func Example_onceButTwice() {
 	dbg.Once(fn)
 
 	// Output:
-	// I'm printed twice!
-	// I'm printed twice!
 }
 
 func ExampleRarely() {
@@ -108,7 +94,7 @@ func ExampleRarely() {
 		dbg.Rarely(0.1, func(count int64) { counter++ })
 	}
 
-	fmt.Println(counter < 150)
+	fmt.Println(counter == 0)
 
 	// Output:
 	// true
@@ -120,10 +106,10 @@ func ExampleEvery() {
 		dbg.Every(10, func(count int64) { counter++ })
 	}
 
-	fmt.Println(counter)
+	fmt.Println(counter == 0)
 
 	// Output:
-	// 100
+	// true
 }
 
 func ExampleCallers() {
@@ -151,14 +137,4 @@ func ExampleCallers() {
 	// main.main
 	// runtime.main
 	// runtime.goexit
-}
-
-func mustContain(s, substr string) {
-	if !strings.Contains(s, substr) {
-		panic("does not contain")
-	}
-}
-
-func pleaseIgnoreThisFuncCall() {
-	testBuf.Reset()
 }
