@@ -9,6 +9,9 @@ import (
 //
 //	req, err := http.Post(dbg.X(url), "localhost:8080/ping", http.NoBody)
 func X[T any](value T) T {
+	if isDisabled() {
+		return value
+	}
 	loc := Location(1)
 	fmt.Fprintf(output, "[DEBUG] %s: %v", loc, value)
 	return value
