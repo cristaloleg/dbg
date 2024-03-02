@@ -8,6 +8,10 @@
 
 Debug helpers for Go.
 
+## Acknowledge
+
+Thanks to [Bohdan Storozhuk](https://github.com/storozhukbm) for [storozhukBM/dump](https://github.com/storozhukBM/dump) which inspired `dbg.Dump`.
+
 ## Features
 
 * Simple.
@@ -27,7 +31,22 @@ go get github.com/cristaloleg/dbg
 ## Example
 
 ```go
-TODO
+func main() {
+	dbg.Hit() // count how many times this line was executed
+
+	dbg.PrintOnce("debuging") // print once per program run
+
+	for i := 0; i < 1000; i++ {
+		// +1 every 10 calls
+		dbg.Every(10, func(count int64) { counter++ })
+	}
+
+	x := 123
+	str := "striiiing"
+	dbg.Dump("so far we have ", x, str)
+	// will be printed:
+	// so far we have x: `123`; str: `striiiing`
+}
 ```
 
 See examples: [example_test.go](example_test.go).
