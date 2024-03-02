@@ -28,7 +28,7 @@ func ExampleSink() {
 }
 
 func ExampleWatch() {
-	defer pleaseIgnoreThisFuncCall()
+	defer cleanupExample()
 
 	defer dbg.Watch()()
 	func() {
@@ -45,7 +45,7 @@ func ExampleWatch() {
 }
 
 func ExampleHit() {
-	defer pleaseIgnoreThisFuncCall()
+	defer cleanupExample()
 
 	for i := 0; i < 10; i++ {
 		dbg.Hit()
@@ -73,7 +73,7 @@ func ExampleOnce() {
 }
 
 func ExamplePrintOnce() {
-	defer pleaseIgnoreThisFuncCall()
+	defer cleanupExample()
 
 	for i := 0; i < 10; i++ {
 		dbg.PrintOnce("debuging")
@@ -153,12 +153,30 @@ func ExampleCallers() {
 	// runtime.goexit
 }
 
+func ExampleX() {
+	defer cleanupExample()
+
+	foo := func(a ...any) any {
+		return a[0]
+	}
+
+	res := foo(dbg.X(123), 456, 789)
+	fmt.Println(res)
+
+	output := testBuf.String()
+	mustContain(output, "[DEBUG] ")
+	mustContain(output, "dbg/x.go:14: 123")
+
+	// Output:
+	// 123
+}
+
 func mustContain(s, substr string) {
 	if !strings.Contains(s, substr) {
 		panic("does not contain")
 	}
 }
 
-func pleaseIgnoreThisFuncCall() {
+func cleanupExample() {
 	testBuf.Reset()
 }
