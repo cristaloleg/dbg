@@ -4,7 +4,24 @@ import (
 	"io"
 	"os"
 	"sync"
+	"sync/atomic"
 )
+
+var enabled int32 = 1
+
+// IsEnabled reports whether debug is enabled.
+func IsEnabled() bool { return !isDisabled() }
+
+func isDisabled() bool { return atomic.LoadInt32(&enabled) == 0 }
+
+// Enable debugging. Pass `true` to enable, pass `false` to disable.
+func Enable(flag bool) {
+	var v int32
+	if flag {
+		v = 1
+	}
+	atomic.StoreInt32(&enabled, v)
+}
 
 var (
 	output     io.Writer = os.Stdout
