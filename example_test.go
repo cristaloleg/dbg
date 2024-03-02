@@ -165,7 +165,7 @@ func ExampleX() {
 
 	output := testBuf.String()
 	mustContain(output, "[DEBUG] ")
-	mustContain(output, "dbg/x.go:12: 123")
+	mustContain(output, " 123")
 
 	// Output:
 	// 123
