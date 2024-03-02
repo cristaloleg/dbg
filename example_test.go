@@ -165,7 +165,7 @@ func ExampleX() {
 
 	output := testBuf.String()
 	mustContain(output, "[DEBUG] ")
-	mustContain(output, "dbg/x.go:14: 123")
+	mustContain(output, "dbg/x.go:12: 123")
 
 	// Output:
 	// 123
@@ -173,7 +173,7 @@ func ExampleX() {
 
 func mustContain(s, substr string) {
 	if !strings.Contains(s, substr) {
-		panic("does not contain")
+		panic(fmt.Sprintf("does not contain '%s' in: %s", substr, s))
 	}
 }
 
