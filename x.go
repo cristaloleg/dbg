@@ -1,9 +1,5 @@
 package dbg
 
-import (
-	"fmt"
-)
-
 // X will print value and return it. Read `X` as `X-ray`.
 // Can be used in any expression:
 //
@@ -13,6 +9,6 @@ func X[T any](value T) T {
 		return value
 	}
 	loc := Location(1)
-	fmt.Fprintf(output, "[DEBUG] %s: %v", loc, value)
+	debug("%s: %v", loc, value)
 	return value
 }

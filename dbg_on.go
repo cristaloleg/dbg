@@ -66,7 +66,7 @@ func Watch(labels ...any) func() time.Duration {
 	return func() time.Duration {
 		took := time.Since(start)
 		// TODO: add histogram
-		fmt.Fprintln(output, caller, "took:", took.String())
+		debug(caller+" took: %s", took.String())
 		return took
 	}
 }
@@ -112,7 +112,7 @@ func PrintOnce(s string) {
 	}
 	once := get(&onceMap, Location(2), new(sync.Once))
 	once.Do(func() {
-		fmt.Fprintln(output, s)
+		debug(s)
 	})
 }
 
