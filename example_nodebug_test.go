@@ -172,4 +172,5 @@ func ExampleDump() {
 	fmt.Println(testBuf.String() == "")
 
 	// Output:
+	// true
 }
