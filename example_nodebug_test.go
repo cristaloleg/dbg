@@ -140,8 +140,6 @@ func ExampleCallers() {
 }
 
 func ExampleX() {
-	cleanupExample()
-
 	foo := func(a ...any) any {
 		return a[0]
 	}
@@ -156,8 +154,6 @@ func ExampleX() {
 }
 
 func ExampleDump() {
-	cleanupExample()
-
 	offset := struct {
 		TxName   string
 		idx      uint64
