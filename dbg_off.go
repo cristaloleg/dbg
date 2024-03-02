@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+func X[T any](value T) T                      { return value }
+func Dump(vars ...any)                        {}
 func Do(fn func())                            {}
 func When(x bool, fn func())                  {}
 func Want(cond bool, format string, a ...any) {}

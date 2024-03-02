@@ -1,3 +1,5 @@
+//go:build !nodebug
+
 package dbg_test
 
 import (
@@ -47,12 +49,12 @@ func TestDump(t *testing.T) {
 		t.Fatal()
 	}
 	mustContain2(t, output, "[DEBUG] ")
-	mustContain2(t, output, "dump_test.go:17: init have idx: `1`; str: `some data`")
-	mustContain2(t, output, "dump_test.go:21: kv: `map[x:5.6 y:4.5]`; sli: `[true false false]`")
+	mustContain2(t, output, "dump_test.go:19: init have idx: `1`; str: `some data`")
+	mustContain2(t, output, "dump_test.go:23: kv: `map[x:5.6 y:4.5]`; sli: `[true false false]`")
 	mustContain2(t, output, "structVal: `{Data:data string privateValue:[map[k:v] map[a:b]]}`; structVal.privateValue[0][\"k\"]: `v`; structVal.Data: `data string`")
 	mustContain2(t, output, "\"other structure, goes here\", idx: `other structure, goes here`; `1`")
 	mustContain2(t, output, "error parsing file ")
-	mustContain2(t, output, "dbg/dump_test.go:37 to dump 1 vars: target line is invalid. Dump should start with `dbg.Dump(` and end with `41`: 37")
+	mustContain2(t, output, "dbg/dump_test.go:39 to dump 1 vars: target line is invalid. Dump should start with `dbg.Dump(` and end with `41`: 39")
 	mustContain2(t, output, "repeated. i: `0`")
 	mustContain2(t, output, "repeated. i: `1`")
 	mustContain2(t, output, "repeated. i: `2`")
