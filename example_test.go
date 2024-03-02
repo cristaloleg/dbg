@@ -14,7 +14,7 @@ import (
 var testBuf bytes.Buffer
 
 func init() {
-	dbg.SetOutput(&testBuf)
+	dbg.SetTestOutput(&testBuf)
 }
 
 func ExampleSink() {
@@ -28,24 +28,26 @@ func ExampleSink() {
 }
 
 func ExampleWatch() {
-	defer cleanupExample()
+	cleanupExample()
 
-	defer dbg.Watch()()
+	start := dbg.Watch()
 	func() {
 		defer dbg.Watch()()
 
 		time.Sleep(time.Second)
 	}()
+	start()
 
 	output := testBuf.String()
-	mustContain(output, "dbg_test.ExampleWatch")
 	mustContain(output, "dbg_test.ExampleWatch.func1")
+	mustContain(output, "dbg_test.ExampleWatch")
+	mustContain(output, "took: 1.")
 
 	// Output:
 }
 
 func ExampleHit() {
-	defer cleanupExample()
+	cleanupExample()
 
 	for i := 0; i < 10; i++ {
 		dbg.Hit()
@@ -73,7 +75,7 @@ func ExampleOnce() {
 }
 
 func ExamplePrintOnce() {
-	defer cleanupExample()
+	cleanupExample()
 
 	for i := 0; i < 10; i++ {
 		dbg.PrintOnce("debuging")
@@ -86,7 +88,7 @@ func ExamplePrintOnce() {
 	fmt.Println(testBuf.String())
 
 	// Output:
-	// debuging
+	// [DEBUG] debuging
 }
 
 func Example_onceButTwice() {
@@ -154,7 +156,7 @@ func ExampleCallers() {
 }
 
 func ExampleX() {
-	defer cleanupExample()
+	cleanupExample()
 
 	foo := func(a ...any) any {
 		return a[0]
@@ -171,12 +173,39 @@ func ExampleX() {
 	// 123
 }
 
+func ExampleDump() {
+	cleanupExample()
+
+	offset := struct {
+		TxName   string
+		idx      uint64
+		deadline uint64
+	}{
+		TxName:   "Final",
+		idx:      34,
+		deadline: 16000000000,
+	}
+	body := "txBody%1"
+	hashCode := uint64(9487746)
+	codeIsValid := false
+
+	dbg.Dump("Tx commit ", offset, body, hashCode, codeIsValid)
+
+	output := testBuf.String()
+	mustContain(output, "[DEBUG] ")
+	mustContain(output, "dbg/example_test.go:192")
+	mustContain(output, "Tx commit offset: `{TxName:Final idx:34 deadline:16000000000}`; body: `txBody%!`(MISSING); hashCode: `9487746`; codeIsValid: `false`")
+
+	// Output:
+}
+
 func mustContain(s, substr string) {
 	if !strings.Contains(s, substr) {
-		panic(fmt.Sprintf("does not contain '%s' in: %s", substr, s))
+		panic(fmt.Sprintf("not found '%s'\nhave (len %d): %s", substr, len(s), s))
 	}
 }
 
 func cleanupExample() {
 	testBuf.Reset()
+	dbg.SetTestOutput(&testBuf)
 }

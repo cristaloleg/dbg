@@ -1,6 +1,7 @@
 package dbg
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"sync"
@@ -36,3 +37,7 @@ func SetOutput(w io.Writer) {
 // Sink any value like it's used.
 // Treat it as `_ = x` or `_, _, ... = x, y, ...`.
 func Sink(values ...any) {}
+
+func debug(format string, args ...any) {
+	fmt.Fprintf(output, "[DEBUG] "+format+"\n", args...)
+}
