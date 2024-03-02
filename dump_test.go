@@ -1,3 +1,5 @@
+//go:build !nodebug
+
 package dbg_test
 
 import (
