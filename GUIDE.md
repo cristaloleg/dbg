@@ -1,5 +1,27 @@
 # Guide for dbg
 
+## Compile without debugging
+
+To completely prevent any debugging code compiled into a binary (including test binary), add a build tag as:
+
+```sh
+go build -tags=nodebug <...>
+
+# or
+
+go test -tags=nodebug <...>
+```
+
+This can be useful to keep debugging code committed but not called in production environment.
+
+## Dynamic on/off
+
+At the same time, any debugging code can be completely switched off using `dbg.Enable(false)` call.
+
+As you can guess this can be enabled back by `dbg.Enable(true)` (which is the default).
+
+NOTE: compiled with `-tags=nodebug` will make `dbg.Enable(...)` no-op.
+
 ## Watch how long function takes
 
 For that we have `dbg.Watch` function. In most cases it will be used in defer statement like:
@@ -81,7 +103,7 @@ There are cases when you want to do an action but not very often, `dbg.Rarely` c
 
 ```go
 func StringLen(input string) int {
-	// 0.1 which is approximately 10% of all StringLen calls
+	// 0.1 which is approximately 10% of all StringLen calls.
 	dbg.Rarely(0.1, func(count int64) {
 		println("got input len:", len(input))
 	})
@@ -93,11 +115,24 @@ Similar function `dbg.Every` does the same but every X calls.
 
 ```go
 func StringLen(input string) int {
-	// every 12 StringLen calls do func
+	// every 12 StringLen calls do func.
 	dbg.Every(12, func(count int64) {
 		println("got input len:", len(input))
 	})
 	return len(input)
+}
+```
+
+To do something with an interval function `dbg.Interval` does the thing:
+
+```go
+func GetFromCache(key int) {
+	// two consecutive calls with 10sec+ difference.
+	dbg.Interval(10*time.Second, func(last int64) {
+		println("cache size:", len(cache))
+	})
+	
+	...
 }
 ```
 

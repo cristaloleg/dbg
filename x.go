@@ -1,3 +1,5 @@
+//go:build !nodebug
+
 package dbg
 
 // X will print value and return it. Read `X` as `X-ray`.

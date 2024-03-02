@@ -138,3 +138,42 @@ func ExampleCallers() {
 	// runtime.main
 	// runtime.goexit
 }
+
+func ExampleX() {
+	cleanupExample()
+
+	foo := func(a ...any) any {
+		return a[0]
+	}
+
+	res := foo(dbg.X(123), 456, 789)
+	fmt.Println(res)
+	fmt.Println(testBuf.String() == "")
+
+	// Output:
+	// 123
+	// true
+}
+
+func ExampleDump() {
+	cleanupExample()
+
+	offset := struct {
+		TxName   string
+		idx      uint64
+		deadline uint64
+	}{
+		TxName:   "Final",
+		idx:      34,
+		deadline: 16000000000,
+	}
+	body := "txBody%1"
+	hashCode := uint64(9487746)
+	codeIsValid := false
+
+	dbg.Dump("Tx commit ", offset, body, hashCode, codeIsValid)
+
+	fmt.Println(testBuf.String() == "")
+
+	// Output:
+}
